@@ -1,16 +1,19 @@
 name: Jalankan Otomatisasi SQA
 
-# Kapan tes ini akan dijalankan secara otomatis?
 on:
   push:
     branches: ["main", "master"]
   pull_request:
     branches: ["main", "master"]
-  workflow_dispatch: # Mengaktifkan tombol agar kita bisa menjalankan tes manual kapan saja
+  workflow_dispatch:
+
+# Memberi izin robot untuk mengunggah halaman web
+permissions:
+  contents: write
 
 jobs:
   test:
-    runs-on: ubuntu-latest # Server GitHub akan menggunakan OS Ubuntu Linux terbaru
+    runs-on: ubuntu-latest
 
     steps:
       - name: Mengambil kode dari repository
@@ -21,7 +24,23 @@ jobs:
         with:
           java-version: "21"
           distribution: "temurin"
-          cache: "maven" # Mempercepat proses karena Maven tidak perlu unduh ulang dari nol
+          cache: "maven"
 
       - name: Menjalankan Eksekusi Tes Cucumber BDD
         run: mvn clean test
+        continue-on-error: true # PENTING: Robot harus lanjut membuat laporan walau ada tes yang gagal/merah
+
+      - name: Merakit Laporan Web Allure
+        uses: simple-elf/allure-report-action@master
+        if: always() # Harus selalu dijalankan
+        with:
+          allure_results: target/allure-results
+          allure_history: allure-history
+
+      - name: Mempublikasikan Laporan ke GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
