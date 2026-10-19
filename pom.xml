@@ -92,13 +92,6 @@
             <artifactId>allure-cucumber7-jvm</artifactId>
             <version>2.24.0</version>
         </dependency>
-
-        <!-- Pustaka untuk membaca file Excel (.xlsx) -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>5.2.3</version>
-        </dependency>
     </dependencies>
 
     <build>
