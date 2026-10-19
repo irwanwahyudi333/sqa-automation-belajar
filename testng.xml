@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!-- Nama daftar putar kita -->
+<suite name="VWO Automation Suite">
+
+    <!-- Kita memasukkan asisten pemantau (Screenshot) ke dalam playlist ini -->
+    <listeners>
+        <listener class-name="com.antigravity.listeners.ScreenshotListener" />
+    </listeners>
+
+    <!-- Kelompok tes yang akan dijalankan -->
+    <test name="Login Tests">
+        <classes>
+            <!-- Memberi tahu robot di mana file tes kita berada -->
+            <class name="com.antigravity.runner.TestRunner" />
+        </classes>
+    </test>
+
+</suite>

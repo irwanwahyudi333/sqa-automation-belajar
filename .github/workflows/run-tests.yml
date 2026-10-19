@@ -1,0 +1,27 @@
+name: Jalankan Otomatisasi SQA
+
+# Kapan tes ini akan dijalankan secara otomatis?
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+  workflow_dispatch: # Mengaktifkan tombol agar kita bisa menjalankan tes manual kapan saja
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # Server GitHub akan menggunakan OS Ubuntu Linux terbaru
+
+    steps:
+      - name: Mengambil kode dari repository
+        uses: actions/checkout@v4
+
+      - name: Menyiapkan Java (JDK 21)
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: "maven" # Mempercepat proses karena Maven tidak perlu unduh ulang dari nol
+
+      - name: Menjalankan Eksekusi Tes Cucumber BDD
+        run: mvn clean test

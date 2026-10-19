@@ -1,0 +1,19 @@
+# Folder hasil kompilasi Maven
+target/
+
+# Laporan Allure
+allure-results/
+.allure/
+
+# Konfigurasi IDE lokal
+.idea/
+.vscode/
+*.iml
+*.log
+
+# Screenshot kegagalan tes
+error_screenshots/
+
+# Berkas sementara / lock Office
+.~lock.*#
+~$*
